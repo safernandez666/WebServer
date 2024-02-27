@@ -28,8 +28,8 @@ pipeline {
             steps {
                 sh 'cosign version'
                 sh 'cosign verify --key $COSIGN_PUBLIC_KEY ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
-      }
-    }
-  }
+                }
+            }
+        }
     }
 }
