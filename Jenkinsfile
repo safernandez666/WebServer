@@ -26,8 +26,8 @@ pipeline {
             steps {
                 script {
                     // Obtener el digest de la imagen desde Docker Hub
-                    sh "digest=$(docker inspect --format='{{index .RepoDigests 0}}' ${DOCKER_REGISTRY}/webserver:latest)"
-                    sh "echo $digest"
+                    sh 'digest=$(docker inspect --format="{{index .RepoDigests 0}}" ${DOCKER_REGISTRY}/webserver:latest)'
+                    sh 'echo $digest'
                 }
             }
         }
