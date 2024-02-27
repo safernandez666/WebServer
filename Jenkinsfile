@@ -22,5 +22,20 @@ pipeline {
                 }
             }
         }
+        stage('cosing') {
+            steps {
+                script {
+                    // Obtener el digest de la imagen desde Docker Hub
+                    sh "docker pull ${DOCKER_REGISTRY}/webserver:latest"
+                    sh "digest=$(docker inspect --format='{{index .RepoDigests 0}}' ${DOCKER_REGISTRY}/webserver:latest)"
+
+                    //Extraer el digest de la cadena devuelta
+                    sh "digest=${digest#*@}" // Elimina todo antes del símbolo '@'
+
+                    // Firmar la imagen con Cosign
+                    sh "cosign sign --key /keys ${DOCKER_REGISTRY}/webserver:latest@${digest}"
+                }
+            }
+        }
     }
 }
