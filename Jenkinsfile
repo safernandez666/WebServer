@@ -31,7 +31,7 @@ pipeline {
         stage('sign the container image') {
             steps {
                 sh 'cosign version'
-                sh "cosign sign --key $COSIGN_PRIVATE_KEY ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
+                sh "cosign sign --key $COSIGN_PUBLIC_KEY ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
             }
         }
     }
