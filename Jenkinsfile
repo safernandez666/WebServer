@@ -4,6 +4,8 @@ pipeline {
     environment {
         DOCKER_VERSION = "v1.0" // Puedes cambiar esto por la versión que desees
         DOCKER_REGISTRY = "safernandez666"
+        COSIGN_PUBLIC_KEY = credentials('cosign-public-key')
+        COSIGN_PRIVATE_KEY = credentials('cosign-private-key')
     }
 
     stages {
@@ -28,10 +30,8 @@ pipeline {
         }
         stage('sign the container image') {
             steps {
-                withCredentials([file(credentialsId: 'cosign-public-key', variable: 'COSIGN_PUBLIC_KEY_FILE')]) {
-                    sh 'cosign version'
-                    sh "cosign sign --key ${COSIGN_PUBLIC_KEY_FILE} ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
-                }
+                sh 'cosign version'
+                sh "cosign sign --key $COSIGN_PUBLIC_KEY ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
             }
         }
     }
