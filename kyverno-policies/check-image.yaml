@@ -17,7 +17,7 @@ metadata:
       how to configure a similar rule and will require replacing with your image(s) and keys.      
 spec:
   validationFailureAction: Enforce
-  background: false
+  background: true
   rules:
     - name: verify-image
       match:
@@ -29,5 +29,6 @@ spec:
         - image: "*"
           key: |-
             -----BEGIN PUBLIC KEY-----
-xxxxxxxxxxxxx
+            MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEHz1ilBMvBTJcQZwlO/73xtAJT9m2
+            H8iCKSyMhQ4BcxmVoEBc4EwUiFWdiTDit3elMew7O//TkW1ppiFoxZa4yw==
             -----END PUBLIC KEY-----
