@@ -24,8 +24,6 @@ pipeline {
         stage('docker push') {
             steps {
                 script {
-                    sh 'docker push ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
-                    //sh 'docker tag ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION} -t ${DOCKER_REGISTRY}/webserver:latest'
                     sh 'docker push ${DOCKER_REGISTRY}/webserver:latest'
                 }
             }
@@ -34,7 +32,7 @@ pipeline {
             steps { // Firmamos la Imagen
                 withCredentials([file(credentialsId: 'cosign-private-key', variable: 'COSIGN_PRIVATE_KEY_FILE')]) {
                     sh 'cosign version'
-                    sh 'cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} -y ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
+                    sh 'cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} -y ${DOCKER_REGISTRY}/webserver:latest'
                 }
             }
         }
