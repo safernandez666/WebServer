@@ -17,14 +17,14 @@ pipeline {
         stage('docker build') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION} -t ${DOCKER_REGISTRY}/webserver:latest -f Dockerfile ."
+                    sh 'docker build -t ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION} -t ${DOCKER_REGISTRY}/webserver:latest -f Dockerfile .'
                 }
             }
         }
         stage('docker push') {
             steps {
                 script {
-                    sh "docker push ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
+                    sh 'docker push ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps { // Credenciales cargadas en GitHub
                 withCredentials([file(credentialsId: 'cosign-private-key', variable: 'COSIGN_PRIVATE_KEY_FILE')]) {
                     sh 'cosign version'
-                    sh "cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
+                    sh 'cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
                 }
             }
         }
