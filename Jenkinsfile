@@ -29,7 +29,7 @@ pipeline {
             }
         }
         stage('sign the container image') {
-            steps {
+            steps { // Credenciales cargadas en GitHub
                 withCredentials([file(credentialsId: 'cosign-private-key', variable: 'COSIGN_PRIVATE_KEY_FILE')]) {
                     sh 'cosign version'
                     sh "cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}"
