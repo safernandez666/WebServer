@@ -18,7 +18,6 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION} -t ${DOCKER_REGISTRY}/webserver:latest -f Dockerfile .'
-                    sh "docker tag ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION} ${DOCKER_REGISTRY}/webserver:latest"
                 }
             }
         }
@@ -26,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker push ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
-                    sh "docker push ${DOCKER_REGISTRY}/webserver:latest"
+                    sh 'docker push ${DOCKER_REGISTRY}/webserver:latest'
                 }
             }
         }
