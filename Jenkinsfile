@@ -32,7 +32,7 @@ pipeline {
             steps { // Firmamos la Imagen
                 withCredentials([file(credentialsId: 'cosign-private-key', variable: 'COSIGN_PRIVATE_KEY_FILE')]) {
                     sh 'cosign version'
-                    sh 'cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
+                    sh 'cosign sign --key ${COSIGN_PRIVATE_KEY_FILE} -y ${DOCKER_REGISTRY}/webserver:${DOCKER_VERSION}'
                 }
             }
         }
